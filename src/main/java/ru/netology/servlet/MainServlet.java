@@ -4,12 +4,10 @@ import ru.netology.controller.PostController;
 import ru.netology.repository.PostRepository;
 import ru.netology.service.PostService;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "main", urlPatterns = {"/"})
 public class MainServlet extends HttpServlet {
     private PostController controller;
 
@@ -33,7 +31,7 @@ public class MainServlet extends HttpServlet {
             }
             if (method.equals("GET") && path.matches("/api/posts/\\d+")) {
                 // easy way
-                final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
+                final var id = Long.parseLong(path.substring(path.lastIndexOf("/")+1));
                 controller.getById(id, resp);
                 return;
             }
@@ -43,7 +41,7 @@ public class MainServlet extends HttpServlet {
             }
             if (method.equals("DELETE") && path.matches("/api/posts/\\d+")) {
                 // easy way
-                final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
+                final var id = Long.parseLong(path.substring(path.lastIndexOf("/")+1));
                 controller.removeById(id, resp);
                 return;
             }

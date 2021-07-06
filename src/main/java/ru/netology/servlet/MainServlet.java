@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class MainServlet extends HttpServlet {
+    public static final String METHOD_GET = "GET";
+    public static final String METHOD_POST = "POST";
+    public static final String METHOD_DELETE = "DELETE";
     private PostController controller;
 
     @Override
@@ -25,12 +28,12 @@ public class MainServlet extends HttpServlet {
         final var path = req.getRequestURI();
         final var method = req.getMethod();
 
-        if (method.equals("GET") && path.equals("/api/posts")) {
+        if (method.equals(METHOD_GET) && path.equals("/api/posts")) {
             controller.all(resp);
             return;
         }
 
-        if (method.equals("GET") && path.matches("/api/posts/\\d+")) {
+        if (method.equals(METHOD_GET) && path.matches("/api/posts/\\d+")) {
             final var id = Long.parseLong(path.substring(path.lastIndexOf("/") + 1));
             controller.getById(id, resp);
             return;
@@ -44,7 +47,7 @@ public class MainServlet extends HttpServlet {
         final var path = req.getRequestURI();
         final var method = req.getMethod();
 
-        if (method.equals("POST") && path.equals("/api/posts")) {
+        if (method.equals(METHOD_POST) && path.equals("/api/posts")) {
             controller.save(req.getReader(), resp);
             return;
         }
@@ -58,7 +61,7 @@ public class MainServlet extends HttpServlet {
         final var path = req.getRequestURI();
         final var method = req.getMethod();
 
-        if (method.equals("DELETE") && path.matches("/api/posts/\\d+")) {
+        if (method.equals(METHOD_DELETE) && path.matches("/api/posts/\\d+")) {
             final var id = Long.parseLong(path.substring(path.lastIndexOf("/") + 1));
             controller.removeById(id, resp);
             return;

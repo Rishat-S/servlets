@@ -22,4 +22,8 @@ public class PostRepository {
 
     public void removeById(long id) {
     }
+
+    public Post update(Post post) {
+        return post;
+    }
 }

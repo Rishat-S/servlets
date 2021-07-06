@@ -28,5 +28,9 @@ public class PostService {
     public void removeById(long id) {
         repository.removeById(id);
     }
+
+    public Post update(Post post) {
+        return repository.update(post);
+    }
 }
 

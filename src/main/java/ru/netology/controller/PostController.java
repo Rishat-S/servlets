@@ -31,7 +31,14 @@ public class PostController {
         response.setContentType(APPLICATION_JSON);
         final var gson = new Gson();
         final var post = gson.fromJson(body, Post.class);
-        final var data = service.save(post);
+        final Post data;
+
+        if (post.getId() == 0) {
+            data = service.save(post);
+        } else {
+            data = service.update(post);
+        }
+
         response.getWriter().print(gson.toJson(data));
     }
 

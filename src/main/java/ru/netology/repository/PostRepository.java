@@ -3,11 +3,13 @@ package ru.netology.repository;
 import ru.netology.model.Post;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 // Stub
 public class PostRepository {
-    private long id;
-    private final Map<Long, Post> posts = new HashMap<>();
+    private final AtomicLong id = new AtomicLong();
+    private final Map<Long, Post> posts = new ConcurrentHashMap<>();
 
     public List<Post> all() {
         return new ArrayList<>(posts.values());
@@ -17,11 +19,11 @@ public class PostRepository {
         return Optional.of(posts.get(id));
     }
 
-    public synchronized Post save(Post post) {
-        return posts.put(++id, post);
+    public Post save(Post post) {
+        return posts.put(id.incrementAndGet(), post);
     }
 
-    public synchronized Post update(Post post) {
+    public Post update(Post post) {
         return posts.put(post.getId(), post);
     }
 
